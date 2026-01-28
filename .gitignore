@@ -33,7 +33,12 @@ ENV/
 # Logs
 *.log
 
-# Large data files (optional, depending on user needs, but safest to ignore large datasets locally)
+# Secrets & Configs
+kaggle.json
+secrets/
+.env
+
+# Large data files
 data/
 !data/dataset.py
 !data/*.py
