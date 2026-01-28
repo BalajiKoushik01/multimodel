@@ -1,4 +1,6 @@
-# Cross-Domain Cervical Cancer Analysis Pipeline
+# Cross-Domain Cervical Cancer Analysis Pipeline (MultiModel)
+
+**Hybrid cancer detection software**
 
 This project implements an end-to-end self-supervised pipeline for cervical cancer analysis using dual-domain data (colposcopy and histopathology). The goal is to address the challenge of limited labeled datasets and unpaired modalities.
 
