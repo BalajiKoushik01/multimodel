@@ -1,56 +1,34 @@
-# Cross-Domain Cervical Cancer Analysis Pipeline (MultiModel)
+# MultiModel — cervical-imaging research experiments
 
-**Hybrid cancer detection software**
+An exploratory Python machine-learning repository with scripts for data preparation, self-supervised training, fine-tuning, evaluation and visualisation. It is **research software only, not clinically validated** and must not be used for screening, diagnosis or treatment decisions.
 
-This project implements an end-to-end self-supervised pipeline for cervical cancer analysis using dual-domain data (colposcopy and histopathology). The goal is to address the challenge of limited labeled datasets and unpaired modalities.
+## Contents
 
-## Key Features
+- `scripts/` — data download, cleaning, synthetic/mock data generation, training, evaluation and inference entry points.
+- `configs/config.yaml` — general model configuration including backbone, class assumptions and training settings.
+- `utils/` — reusable losses and external-data support.
+- `docs/wiki/` — historical notes about installation, data and training.
+- `visualizations/` — earlier saved charts; no independently verified reproducibility claim.
+- `data_acquisition.md` — instructions on external data sources.
 
-*   **Dual-Encoder Architecture:** Separate encoders for colposcopy and histopathology images to extract domain-specific features.
-*   **Self-Supervised Learning (SSL):** Aligns representations via contrastive learning and prototype distribution matching.
-*   **Weakly Supervised Lesion Attention:** Identifies salient regions (lesions) without pixel-level annotations.
-*   **Multi-Task Prediction Head:** Estimates malignancy and severity scores simultaneously.
-*   **Domain Adaptation:** Transfers knowledge from histopathology to colposcopy without paired samples.
+The former README described `models/`, `data/`, dedicated SSL/fine-tuning YAML files and a notebook that are **not present in the current tracked tree**. Do not infer a functioning end-to-end model from that documentation.
 
-## Project Structure
+## Local source checks
 
-*   `data/`: Contains dataset loading and preprocessing logic.
-*   `models/`: Implements neural network architectures (backbones, attention modules, projection heads).
-*   `utils/`: Helper functions for logging, visualization, and metrics.
-*   `configs/`: Configuration files (YAML) for hyperparameters.
-*   `scripts/`: Training, evaluation, and inference scripts.
+```bash
+git clone https://github.com/BalajiKoushik01/multimodel.git
+cd multimodel
+python -m venv .venv
+# Linux/macOS: source .venv/bin/activate
+# Windows: .venv\Scripts\activate
+python -m pip install -r requirements.txt
+python -m compileall -q scripts utils
+```
 
-## Data Acquisition
+Read the required imports and arguments in `scripts/train_ssl.py`, `scripts/train_finetune.py` and `scripts/evaluate_model.py` before starting any experiment. Training may not run until missing model components, checkpoint dependencies and dataset files are restored. The current GitHub CI compiles Python source and parses YAML configuration; it does **not** run training or claim accuracy.
 
-For details on how to download and setup external datasets (AnnoCerv, MobileODT, etc.), please see [data_acquisition.md](data_acquisition.md).
+## Evaluation and ethics
 
-## Getting Started
+Before sharing any research result, establish dataset licensing, patient-level train/test separation, exact class definitions, independent validation, confidence intervals and reproducible checkpoints. Existing plots are not a substitute for the underlying dataset, metrics and methods. Protect all patient-identifiable material and never use this code as a medical device.
 
-1.  **Installation:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-2.  **Training:**
-    To pre-train the model:
-    ```bash
-    python scripts/train_ssl.py --config configs/ssl_config.yaml
-    ```
-
-    To fine-tune for downstream tasks:
-    ```bash
-    python scripts/train_finetune.py --config configs/finetune_config.yaml
-    ```
-
-3.  **Visualization:**
-    See `notebooks/visualization.ipynb` for attention map visualizations.
-
-## Dependencies
-
-*   PyTorch
-*   Torchvision
-*   NumPy
-*   OpenCV
-*   Scikit-learn
-*   PyYAML
-*   tqdm
+See [research reproducibility](docs/REPRODUCIBILITY.md).
